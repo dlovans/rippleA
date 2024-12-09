@@ -12,15 +12,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.dlovan.ripplea.ui.theme.Emerald
 
 @Composable
 fun ChatMessage(username: String,message: String, isMe: Boolean) {
     Column (
         modifier = Modifier
             .fillMaxWidth()
-            .padding(5.dp)
+            .padding(vertical = 5.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(if (isMe) Color.Green else Color.Gray)
+            .background(if (isMe) Emerald else Color.LightGray)
             .padding(10.dp)
 
     ) {
@@ -32,5 +33,5 @@ fun ChatMessage(username: String,message: String, isMe: Boolean) {
 @Preview(showBackground = true)
 @Composable
 fun ChatMessagePreview() {
-    ChatMessage("Dlovan","Hello", true)
+    ChatMessage("Dlovan","Hello", false)
 }
