@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.dlovan.ripplea.ui.composables.ChatContainer
 import dev.dlovan.ripplea.ui.composables.ChatField
+import dev.dlovan.ripplea.ui.theme.Stone
 import org.json.JSONObject
 
 @Composable
@@ -28,7 +29,7 @@ fun ChatScreen(location: String = "Abyss") {
     )
     Box(
         modifier = Modifier
-            .background(Color(red = 54, green = 69, blue = 79))
+            .background(Stone)
             .padding(20.dp, 30.dp)
             .fillMaxSize()
     ) {
