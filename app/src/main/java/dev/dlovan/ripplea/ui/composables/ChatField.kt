@@ -24,18 +24,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.dlovan.ripplea.R
+import dev.dlovan.ripplea.ui.theme.Emerald
+import dev.dlovan.ripplea.ui.theme.Stone
 
 @Composable
 fun ChatField(modifier: Modifier = Modifier) {
     var message by remember { mutableStateOf("") }
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(red = 54, green = 69, blue = 79))
+            .background(Stone)
             .border(
                 width = 2.dp,
-                color = Color(red = 52, green = 211, blue = 153),
+                color = Emerald,
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(end = 10.dp)
@@ -57,32 +60,7 @@ fun ChatField(modifier: Modifier = Modifier) {
             modifier = Modifier.weight(1f)
         )
 
-        if (message.isEmpty()) {
-            Row {
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier.size(35.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_camera_alt_24),
-                        contentDescription = "Play Icon",
-                        tint = Color.White
-                    )
-                }
-
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier.size(35.dp)
-
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_keyboard_voice_24),
-                        contentDescription = "Play Icon",
-                        tint = Color.White
-                    )
-                }
-            }
-        } else {
+        if (message.isNotEmpty()) {
             IconButton(
                 onClick = { },
                 modifier = Modifier.size(35.dp)
@@ -94,6 +72,44 @@ fun ChatField(modifier: Modifier = Modifier) {
                 )
             }
         }
+
+//        if (message.isEmpty()) {
+//            Row {
+//                IconButton(
+//                    onClick = { },
+//                    modifier = Modifier.size(35.dp)
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.baseline_camera_alt_24),
+//                        contentDescription = "Play Icon",
+//                        tint = Color.White
+//                    )
+//                }
+//
+//                IconButton(
+//                    onClick = { },
+//                    modifier = Modifier.size(35.dp)
+//
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.baseline_keyboard_voice_24),
+//                        contentDescription = "Play Icon",
+//                        tint = Color.White
+//                    )
+//                }
+//            }
+//        } else {
+//            IconButton(
+//                onClick = { },
+//                modifier = Modifier.size(35.dp)
+//            ) {
+//                Icon(
+//                    painter = painterResource(id = R.drawable.baseline_send_24),
+//                    contentDescription = "Play Icon",
+//                    tint = Color.White
+//                )
+//            }
+//        }
     }
 }
 
