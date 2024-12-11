@@ -4,8 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,8 +33,9 @@ fun ChatScreen(location: String = "Abyss") {
     Box(
         modifier = Modifier
             .background(Stone)
-            .padding(20.dp, 30.dp)
             .fillMaxSize()
+            .padding(WindowInsets.safeContent.asPaddingValues())
+
     ) {
         Column(
             modifier = Modifier.fillMaxSize().padding(bottom = 10.dp),
