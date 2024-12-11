@@ -1,17 +1,23 @@
 package dev.dlovan.ripplea.views
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,13 +51,15 @@ fun AuthScreen(
             .fillMaxSize()
             .background(Stone)
             .padding(10.dp)
+            .padding(WindowInsets.safeContent.asPaddingValues())
+
     ) {
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .fillMaxWidth()
-                .padding(start = 10.dp, top = 30.dp)
+                .padding(start = 10.dp)
         ) {
             Text(
                 if (authType == AuthType.SIGN_IN) "Welcome Back!" else "Get Started!",
@@ -62,7 +70,7 @@ fun AuthScreen(
             Text(
                 if (authType == AuthType.SIGN_IN) "Sign in to start chatting." else "Join and chat.",
                 color = Color.White,
-                fontSize = 15.sp)
+                fontSize = 20.sp)
         }
 
         Column(
@@ -118,6 +126,22 @@ fun AuthScreen(
                         .padding(10.dp),
                     textStyle = TextStyle(color = Color.White, fontSize = 16.sp)
                 )
+            }
+
+            Button(
+                onClick = {
+                    onNavigateToChat()
+                },
+                shape = RoundedCornerShape(15.dp),
+                modifier = Modifier
+                    .height(45.dp)
+                    .fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Emerald
+                ),
+                border = BorderStroke(1.dp, Emerald)
+            ) {
+                Text("Start Chatting")
             }
 
             Text("Or", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
