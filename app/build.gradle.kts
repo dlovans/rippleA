@@ -63,6 +63,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 }
