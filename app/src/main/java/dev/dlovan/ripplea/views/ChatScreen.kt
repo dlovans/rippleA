@@ -17,19 +17,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.dlovan.ripplea.ui.composables.ChatContainer
 import dev.dlovan.ripplea.ui.composables.ChatField
 import dev.dlovan.ripplea.ui.theme.Stone
+import dev.dlovan.ripplea.viewmodels.AuthViewModel
 import org.json.JSONObject
 
 @Composable
-fun ChatScreen(location: String = "Abyss") {
-
+fun ChatScreen(
+    location: String = "Abyss",
+    authViewModel: AuthViewModel
+) {
     val dummyMessages = listOf(
         JSONObject("""{"sender": "Pablito", "content": "whas goin on bro", "isMine": true}"""),
         JSONObject("""{"sender": "MisterCHEF", "content": "Sierra 117 ready to cook off", "isMine": false}"""),
         JSONObject("""{"sender": "ElPadre", "content": "MisterChef, wanna tell me whad u doin on dat ship, que?", "isMine": false}""")
     )
+
     Box(
         modifier = Modifier
             .background(Stone)
@@ -56,5 +61,5 @@ fun ChatScreen(location: String = "Abyss") {
 @Preview(showBackground = true)
 @Composable
 fun ChatScreenPreview() {
-    ChatScreen()
+    ChatScreen(authViewModel = hiltViewModel())
 }
