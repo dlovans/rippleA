@@ -3,6 +3,7 @@ package dev.dlovan.ripplea.views
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -29,22 +31,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import dev.dlovan.ripplea.R
 import dev.dlovan.ripplea.ui.composables.AuthButton
 import dev.dlovan.ripplea.ui.theme.Emerald
 import dev.dlovan.ripplea.ui.theme.Stone
 import dev.dlovan.ripplea.utils.AuthType
+import dev.dlovan.ripplea.viewmodels.AuthViewModel
 
 @Composable
 fun AuthScreen(
     authType: AuthType = AuthType.SIGN_IN,
-    onNavigateToChat: () -> Unit
+    onNavigateToChat: () -> Unit,
+    authViewModel: AuthViewModel
 ) {
+    var authTypeState by remember { mutableStateOf(authType) }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
 
     Box(
         modifier = Modifier
@@ -62,13 +71,13 @@ fun AuthScreen(
                 .padding(start = 10.dp)
         ) {
             Text(
-                if (authType == AuthType.SIGN_IN) "Welcome Back!" else "Get Started!",
+                if (authTypeState == AuthType.SIGN_IN) "Welcome Back!" else "Get Started!",
                 color = Color.White,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                if (authType == AuthType.SIGN_IN) "Sign in to start chatting." else "Join and chat.",
+                if (authTypeState == AuthType.SIGN_IN) "Sign in to start chatting." else "Join and chat.",
                 color = Color.White,
                 fontSize = 20.sp)
         }
@@ -96,6 +105,7 @@ fun AuthScreen(
                     value = email,
                     maxLines = 1,
                     onValueChange = { email = it },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     modifier = Modifier
                         .weight(1f)
                         .padding(10.dp),
@@ -119,11 +129,13 @@ fun AuthScreen(
                 Text("Password: ", color = Color.White, modifier = Modifier.padding(start = 20.dp))
                 BasicTextField(
                     value = password,
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     maxLines = 1,
                     onValueChange = { password = it },
                     modifier = Modifier
                         .weight(1f)
                         .padding(10.dp),
+                    visualTransformation = PasswordVisualTransformation(),
                     textStyle = TextStyle(color = Color.White, fontSize = 16.sp)
                 )
             }
@@ -147,7 +159,7 @@ fun AuthScreen(
             Text("Or", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
 
             AuthButton(
-                AuthType.SIGN_IN,
+                authTypeState,
                 "Google",
                 R.drawable.google
             ) {
@@ -155,11 +167,39 @@ fun AuthScreen(
             }
 
             AuthButton(
-                AuthType.SIGN_IN,
+                authTypeState,
                 "Apple",
                 R.drawable.apple
             ) {
                 onNavigateToChat()
+            }
+
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Row (
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        if (authTypeState == AuthType.SIGN_IN) "Don't have an account?" else "Already have an account?",
+                        color = Color.White,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        if (authTypeState == AuthType.SIGN_IN) "Sign Up" else "Sign In",
+                        color = Emerald,
+                        fontSize = 16.sp,
+                        modifier = Modifier.clickable {
+                            authTypeState = when (authTypeState) {
+                                AuthType.SIGN_IN -> AuthType.SIGN_UP
+                                AuthType.SIGN_UP -> AuthType.SIGN_IN
+                            }
+                        }
+                    )
+                }
             }
         }
     }
@@ -169,5 +209,5 @@ fun AuthScreen(
 @Preview(showBackground = true)
 @Composable
 fun AuthScreenPreview() {
-    AuthScreen(onNavigateToChat = {})
+    AuthScreen(onNavigateToChat = {}, authViewModel = hiltViewModel())
 }
